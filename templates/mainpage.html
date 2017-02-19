@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <title>MyBlog</title>
+</head>
+<body>
+    <h1>New post</h1>
+
+    <form method="post">
+            <label>
+                <div>Guest</div>
+                <input type="text" name="name" value="{{name}}">
+            </label>
+
+            <label>
+                <div>Post</div>
+                <textarea name="guestpost">{{guestpost}}</textarea>
+            </label>
+
+            <div class="error">{{error}}</div>
+
+            <input type="submit">
+            
+    </form>
+
+    <!--Draws a line accross the page-->
+    <hr>
+    
+    {% for art in arts %}
+        <div class="art">
+            <div class="art-title">{{art.title}}</div>
+            <pre class="art-body">{{art.art}}</pre> 
+        </div>
+    {% endfor %}
+
+
+ {% endblock %}
