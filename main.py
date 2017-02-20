@@ -33,9 +33,9 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-class GuestPost(db.Model):
+class PostWrite(db.Model):
     name = db.StringProperty(required = True)
-    guestpost = db.StringProperty(required = True)
+    guestpost = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
 
 
@@ -46,22 +46,27 @@ class MainPage(Handler):
     def get(self):
         self.render_front()
 
-class NewPost(self)
+class NewPost(Handler):
+    # def render_post(self, name="", guestpost=""):
+    posts = db.GqlQuery("SELECT * FROM PostWrite ORDER BY created DESC ")
+        # self.render("newpostpage.html", name = name, guestpost = guestpost, error = error, posts = posts)
+
     def post(self):
         name = self.request.get("name")
         guestpost = self.request.get("guestpost")
+      
 
-        if name and guespost:
-            a = GuestPost(name = name, guestpost = guestpost)
+        if name and guestpost:
+            a = PostWrite(name = name, guestpost = guestpost)
             # Puts the retrieved data in the datatbase
             a.put()
 
-            self.render("/newpost", name = name, guestpost = guestpost, posts = posts)
+            self.render("newpostpage.html", name, guestpost, posts)
         else:
             error = "We need both a name and a post"
-            self.render_front(name,  guestpost,  error)
+            self.render("mainpage.html", name,  guestpost,  error)
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
+    ('/', MainPage),
     ('/newpost', NewPost)
 ], debug=True)

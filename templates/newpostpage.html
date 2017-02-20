@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>New Post</h1>
+
+    {% for post in posts %}
+        <div class="post">
+            <div class="post-name">{{post.name}}</div>
+            <div class="post-body">{{post.guestpost}}</div> 
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

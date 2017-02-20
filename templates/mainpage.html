@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<head>
-    <title>MyBlog</title>
-</head>
 <body>
-    <h1>New post</h1>
 
-    <form method="post">
+    <form>
             <label>
-                <div>Guest</div>
+                <div>Guest Name</div>
                 <input type="text" name="name" value="{{name}}">
             </label>
 
@@ -20,19 +16,8 @@
 
             <div class="error">{{error}}</div>
 
-            <input type="submit">
+            <input class="submitbutton" type="submit">
             
     </form>
-
-    <!--Draws a line accross the page-->
-    <hr>
-    
-    {% for art in arts %}
-        <div class="art">
-            <div class="art-title">{{art.title}}</div>
-            <pre class="art-body">{{art.art}}</pre> 
-        </div>
-    {% endfor %}
-
 
  {% endblock %}
