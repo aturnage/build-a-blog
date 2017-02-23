@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- html stuff here -->
+
+    <div class = "post">
+        <div class = "post-name"> {{submission.name}} </div>
+        <pre class="post-guestpost">{{submission.guestpost}}</pre>
+    </div>
+    <div class="error"> {{error}} </div>
+    <hr>
+
+    <button onclick="window.location.href='/'">Back To Blog</button>
+
+{% endblock %}

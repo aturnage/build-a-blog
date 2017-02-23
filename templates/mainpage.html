@@ -1,23 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
-<body>
+    <h1>Top 5 Post</h1>
 
-    <form>
-            <label>
-                <div>Guest Name</div>
-                <input type="text" name="name" value="{{name}}">
-            </label>
+    {% for post in posts %}
+        <div class="post">
+            <div class="post-name"><a href="/blog/{{post.key().id()}}">{{post.name}}</a></div>
+            <div class="post-body">{{post.guestpost}}</div> 
+        </div>
+    <hr>
 
-            <label>
-                <div>Post</div>
-                <textarea name="guestpost">{{guestpost}}</textarea>
-            </label>
+    {% endfor %}
+    <button onclick="window.location.href='/newpost'">New Post</button
 
-            <div class="error">{{error}}</div>
-
-            <input class="submitbutton" type="submit">
-            
-    </form>
-
- {% endblock %}
+{% endblock %}

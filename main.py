@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 import webapp2
 import jinja2
 import os
@@ -39,32 +40,48 @@ class PostWrite(db.Model):
     created = db.DateTimeProperty(auto_now_add = True)
 
 class MainPage(Handler):
-    def render_front(self, name="", guestpost="", error=""):
-        posts = db.GqlQuery("SELECT * FROM PostWrite ORDER BY created DESC ")
-        self.render("mainpage.html", name = name, guestpost = guestpost, error = error)
-
     def get(self):
-        self.render_front()
+        posts = db.GqlQuery("SELECT * FROM PostWrite ORDER BY created DESC LIMIT 5")
+        self.render('mainpage.html', posts = posts)
+
+class Blog(Handler):
+    def get(self):
+        self.render("blog.html", name, guestpost, posts)
+
+class NewPost(Handler):
+    def get(self, name = "", guestpost = "", error = ""):
+        self.render('newpostpage.html', name = name, guestpost = guestpost, error = error)
 
     def post(self):
         name = self.request.get("name")
         guestpost = self.request.get("guestpost")
-
+        # logging.info(name)
+        # logging.info(guestpost)
         if name and guestpost:
             a = PostWrite(name = name, guestpost = guestpost)
             # Puts the retrieved data in the datatbase
             a.put()
 
-            self.redirect("/newpost")
+            self.redirect('/')
         else:
             error = "We need both a name and a post"
-            self.render_front(name,  guestpost,  error)
+            self.get(name, guestpost, error)
+            return
 
-class NewPost(Handler):
-    def get(self):
-        self.render("newpostpage.html", name, guestpost, posts)
+class BlogID(Handler):
+
+    def get(self, blog_id):
+        submission = PostWrite.get_by_id(int(blog_id))
+
+        if submission:
+            self.render("blog.html", submission=submission)
+
+        else:
+            error = "There is no blog post with that ID."
+            self.render("blog.html", error=error)
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/newpost', NewPost)
-], debug=True)
+    ('/newpost', NewPost),
+    webapp2.Route('/blog/<blog_id:\d+>', BlogID)
+    ], debug=True)
