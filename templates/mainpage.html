@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h1>Top 5 Post</h1>
-
-    {% for post in posts %}
-        <div class="post">
-            <div class="post-name"><a href="/blog/{{post.key().id()}}">{{post.name}}</a></div>
-            <div class="post-body">{{post.guestpost}}</div> 
+{% for postwrite in posts %}
+        <div class ="posts">
+                <div class="post-name"><a href="/blog/{{postwrite.key().id()}}">{{postwrite.name}}</a></div>
+                <div class="post-guestpost">{{postwrite.guestpost}}</div>
         </div>
-    <hr>
+{% endfor %}
+<hr>
+<button onclick="window.location.href='/newpost'">Back To Blog</button>
 
-    {% endfor %}
-    <button onclick="window.location.href='/newpost'">New Post</button
 
 {% endblock %}
